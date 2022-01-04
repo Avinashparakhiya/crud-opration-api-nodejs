@@ -54,23 +54,7 @@ const store=(req,res,next)=>
 
         }
     )
-    // const schema=Joi.object().keys({
-    //     name:Joi.string().required(),
-    //     age:Joi.number().required(),
-    //     mobileno:Joi.number().required(),
-    //     email:Joi.string.required().email().trim(),
-    //     password:Joi.string().min(5).max(10).required()
-    // })
-    // Joi.valid
-    // employee.save(req.body,schema,(err,result)=>
-    // {
-    //     if(err)
-    //     {
-    //         res.send('An Error has Ocured')
-    //     }
-    //     console.log(result);
-    //     res.send('Successfully posted data')
-    // })
+
     .then(response=>
         {
             res.json({message:'Employee Add Succesfully'})
@@ -133,6 +117,23 @@ const destroy=(req,res,next)=>
             )
         })
 }
+
+const login = (req, res, next) => {
+  var email = req.body.email;
+  var password = req.body.password;
+  Employee.find({ email: email })
+    .exec()
+    .then((email) => {
+      res.status(201).json({
+        message: 'user found',
+      });
+    })
+    .catch((err) => {
+      res.json({
+        error: err,
+      });
+    });
+};
 
 module.exports={index,show,store,update,destroy}
 
